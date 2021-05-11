@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if message_success %}
+  <div class="alert alert-success" role="alert">
+    {{ message_success }}
+  </div>
+{% endif %}
+
+{% if message_danger %}
+  <div class="alert alert-danger" role="alert">
+    {{ message_danger }}
+  </div>
+{% endif %}
+
+<h1> Emails </h1>
+
+<div class="container">
+    <table class="table table-striped table-hover">
+  <thead class="table table-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nazwa</th>
+      <th scope="col">Kampania</th>
+      <th scope="col">Wysyłany</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for message in messages %}
+    <tr>
+      <th scope="row"> {{ message.id }} </th>
+      <td>{{ message.CAMPAIGN_NAME }}</td>
+      <td>{{ message.CAMPAIGN }}</td>
+      <td>{{ message.SENDING }}</td>
+      {% if message.CAMPAIGN == False %}
+      <td><a href="{% url 'send_email' message.id %}"><button class="btn btn-primary">Wyślij</button></a></td>
+      {% endif %}
+      {% if message.CAMPAIGN == True %}
+          <td>
+            <a href="{% url 'change_status' message.id %}">
+            {% if message.SENDING == True %}
+              <button class="btn btn-warning">STOP</button>
+            {% else %}
+              <button class="btn btn-success">START</button>
+            {% endif %}
+            </a>
+          </td>
+      {% endif %}
+      <td><a href="{% url 'delete_email' message.id %}"><button class="btn btn-danger btn-sm">x</button></a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% comment %} <div class="container-sm pt-5">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">ADD EMAIL</button>
+    </form>
+</div> {% endcomment %}
+
+
+
+{% endblock %}
