@@ -25,11 +25,11 @@ class Index(View):
         }
         return render(request, self.template, context)
 
-    def post(self, request):
-        form = MessageForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse("index") + "?message_success=Email dodany!")
+    # def post(self, request):
+    #     form = MessageForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect(reverse("index") + "?message_success=Email dodany!")
 
 
 class DeleteEmail(View):
@@ -47,8 +47,8 @@ class SendEmail(View):
                 PeriodicTask.objects.create(
                 crontab=message.SCHEDULE,
                 name=message.CAMPAIGN_NAME,
-                task="auto_emails.celery.task",
-                # args=json.dumps([f'{email_id}']),
+                task="auto_emails.celery.send_email",
+                args=json.dumps([f'{email_id}']),
                 )
                 message.CAMPAIGN = True
                 message.SENDING = True
@@ -61,6 +61,7 @@ class SendEmail(View):
 
 
 class ChangeCampaignStatus(View):
+
     def get(self, request, email_id):
         message = Message.objects.get(pk = email_id)
         task = PeriodicTask.objects.get(name=message.CAMPAIGN_NAME)
@@ -76,3 +77,14 @@ class ChangeCampaignStatus(View):
             message.SENDING = True
             message.save()
             return redirect(reverse("index") + "?message_success=Kampania wznowiona!")
+
+class EmailHistory(View):
+
+    def get(self, request, email_id):
+        message = Message.objects.get(pk=email_id)
+        sent_messages = MessageSent.objects.filter(MESSAGE=message)
+        context = {
+            "message": message,
+            "sent_messages": sent_messages
+        }
+        return render(request, "send_emails/email_history.html", context)

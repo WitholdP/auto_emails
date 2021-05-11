@@ -140,4 +140,4 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_BACKEND = 'django-cache'
 
-import auto_emails.email
+from auto_emails.email import EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, DEFAULT_FROM_EMAIL

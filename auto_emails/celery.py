@@ -35,7 +35,11 @@ def send_email(email_id):
     if message.EMAIL_ATTACHMENT:
         email.attach_file(f"media/{message.EMAIL_ATTACHMENT}")
     
-    email.send(fail_silently=False)
+    sent_message = email.send(fail_silently=False)
+    if sent_message:
+        MessageSent.objects.create(MESSAGE=message)
+    else:
+        MessageSent.objects.create(MESSAGE=message, SENT=False)
 
 @app.task(bind=True)
 def debug_task(self):

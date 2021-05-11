@@ -17,7 +17,7 @@
 <h1> Emails </h1>
 
 <div class="container">
-    <table class="table table-striped table-hover">
+<table class="table table-striped table-hover">
   <thead class="table table-dark">
     <tr>
       <th scope="col">#</th>
@@ -49,7 +49,7 @@
             </a>
           </td>
       {% endif %}
-      <td><a href="{% url 'delete_email' message.id %}"><button class="btn btn-danger btn-sm">x</button></a></td>
+      <td><a href="{% url 'email_history' message.id %}"><button class="btn btn-primary btn-sm">Historia</button></a></td>
     </tr>
     {% endfor %}
   </tbody>
