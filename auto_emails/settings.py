@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "send_emails",
+    "authentication",
+
     "django_celery_beat",
     'django_celery_results',
 ]
@@ -83,6 +86,11 @@ DATABASES = {
     }
 }
 
+#Authentication backends
+AUTHENTICATION_BACKENDS = [
+    'authentication.auth_backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    ]
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

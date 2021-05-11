@@ -4,8 +4,9 @@ from django.views import View
 import json
 
 from .forms import MessageForm
-from .models import Message, MessageSent
+from .models import Message
 from django_celery_beat.models import PeriodicTask
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -32,14 +33,7 @@ class Index(View):
     #         return redirect(reverse("index") + "?message_success=Email dodany!")
 
 
-class DeleteEmail(View):
-    def get(self, request, email_id):
-        message = Message.objects.get(pk=email_id)
-        # message.delete()
-        return redirect(reverse("index") + "?message_danger=Email usunięty!")
-
-
-class SendEmail(View):
+class SendEmail(LoginRequiredMixin, View):
     def get(self, request, email_id):
         message = Message.objects.get(pk = email_id)
         if message.CAMPAIGN == False:
@@ -60,7 +54,7 @@ class SendEmail(View):
             return redirect(reverse("index") + "?message_danger=Kampania już trwa!")
 
 
-class ChangeCampaignStatus(View):
+class ChangeCampaignStatus(LoginRequiredMixin, View):
 
     def get(self, request, email_id):
         message = Message.objects.get(pk = email_id)
@@ -78,13 +72,17 @@ class ChangeCampaignStatus(View):
             message.save()
             return redirect(reverse("index") + "?message_success=Kampania wznowiona!")
 
-class EmailHistory(View):
 
+class EmailHistory(View):
     def get(self, request, email_id):
-        message = Message.objects.get(pk=email_id)
-        sent_messages = MessageSent.objects.filter(MESSAGE=message)
-        context = {
-            "message": message,
-            "sent_messages": sent_messages
-        }
-        return render(request, "send_emails/email_history.html", context)
+        if request.user.is_authenticated:
+            message = Message.objects.get(pk=email_id)
+            sent_messages = MessageSent.objects.filter(MESSAGE=message)
+            context = {
+                "message": message,
+                "sent_messages": sent_messages
+            }
+            return render(request, "send_emails/email_history.html", context)
+        else:    
+            return redirect("/")
+        
