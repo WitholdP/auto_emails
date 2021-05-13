@@ -85,4 +85,3 @@ class EmailHistory(View):
             return render(request, "send_emails/email_history.html", context)
         else:    
             return redirect("/")
-        

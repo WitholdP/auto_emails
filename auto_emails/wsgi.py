@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "auto_emails.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "auto_emails.settings.base")
 
 application = get_wsgi_application()

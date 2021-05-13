@@ -1,5 +1,6 @@
 #email password setting
 auto_emails/email.py
+auto_emails/static/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -4,7 +4,7 @@ from celery import Celery
 
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "auto_emails.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "auto_emails.settings.base")
 
 app = Celery("auto_emails")
 
