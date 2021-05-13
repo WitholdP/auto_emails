@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "authentication",
 
     "django_celery_beat",
-    'django_celery_results',
 ]
 
 MIDDLEWARE = [
