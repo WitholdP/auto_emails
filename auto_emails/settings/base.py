@@ -81,8 +81,11 @@ WSGI_APPLICATION = "auto_emails.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "HOST": "127.0.0.1",
+        "NAME": "auto_emails",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "USER": "postgres",
+        "PASSWORD": "Kurwa123!",
     }
 }
 
@@ -155,4 +158,4 @@ CELERY_RESULT_BACKEND = 'django-cache'
 
 
 
-# from auto_emails.email import EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, DEFAULT_FROM_EMAIL
+# from auto_emails.email import EMAIL_HOST_PASSWORD, EMAIL_HOST_USER

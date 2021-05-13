@@ -8,6 +8,8 @@ from .models import Message
 from django_celery_beat.models import PeriodicTask
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from send_emails.models import Message
+from django.core.mail import EmailMessage
 
 
 class Index(View):
@@ -52,6 +54,24 @@ class SendEmail(LoginRequiredMixin, View):
                 return redirect(reverse("index") + "?message_danger=Kampania nie mogła się rozpocząć!")
         else:
             return redirect(reverse("index") + "?message_danger=Kampania już trwa!")
+
+
+class TestMail(LoginRequiredMixin, View):
+    def get(self, request, email_id):
+        message = Message.objects.get(pk = email_id)
+        email = EmailMessage(
+            subject = message.EMAIL_SUBJECT,
+            body = message.EMAIL_BODY,
+            to = [message.EMAIL_RECIEPIENT],
+        )
+        if message.EMAIL_ATTACHMENT:
+            email.attach_file(f"media/{message.EMAIL_ATTACHMENT}")
+        
+        sent_message = email.send(fail_silently=True)
+        if sent_message:
+            return redirect(reverse("index") + "?message_success=email wysłany!")
+        else:
+            return redirect(reverse("index") + "?message_danger=email nie wysłany!")
 
 
 class ChangeCampaignStatus(LoginRequiredMixin, View):

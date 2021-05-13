@@ -27,6 +27,7 @@
       <th scope="col">Wysyłany</th>
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -51,6 +52,7 @@
           </td>
       {% endif %}
       <td><a href="{% url 'email_history' message.id %}"><button class="btn btn-primary btn-sm">Historia</button></a></td>
+      <td><a href="{% url 'test_mail' message.id %}"><button class="btn btn-primary btn-sm">test</button></a></td>
     </tr>
     {% endfor %}
   </tbody>
