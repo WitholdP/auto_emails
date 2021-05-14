@@ -153,7 +153,8 @@ EMAIL_HOST_USER = "g.zrybli@gmail.com"
 DEFAULT_FROM_EMAIL = "g.zrybli@gmail.com"
 
 # celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = "redis://:pe8e3ab97129aa84c7f53dbb485813fd89c2bdc12cdc305a942a33e34df974a76@ec2-108-128-174-219.eu-west-1.compute.amazonaws.com:7709"
+# 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
