@@ -161,4 +161,4 @@ CELERY_RESULT_BACKEND = 'django-cache'
 
 
 
-# from auto_emails.email import EMAIL_HOST_PASSWORD, EMAIL_HOST_USER
+# from auto_emails.email import EMAIL_HOST_PASSWORD
